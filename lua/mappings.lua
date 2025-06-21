@@ -2,7 +2,7 @@ require "nvchad.mappings"
 
 local map = vim.keymap.set
 
-map("n", ";", ":", { desc = "CMD enter command mode" })
+-- map("n", ";", ":", { desc = "CMD enter command mode" })
 
 map("i", "jj", "<ESC>", { desc = "Escape", remap = true })
 
@@ -16,7 +16,12 @@ map("n", "<leader>cn", [[:!node %<CR>]], { desc = "Execute node code" })
 
 map("n", "<leader>ct", [[:!npx ts-node %<CR>]], { desc = "Execute ts node code" })
 
+-- GIT KEYMAPS
 map("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit", noremap = true })
+
+map("n", "<leader>gb", ":Gitsigns toggle_current_line_blame<CR>", { desc = "Toggle Git Blame Inline", noremap = true })
+
+map("n", "<leader>gh", ":Gitsigns preview_hunk<CR>", { desc = "Preview Hunk Inline", noremap = true })
 
 map(
   "n",
