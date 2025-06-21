@@ -6,4 +6,5 @@ local o = vim.o
 
 o.cursorlineopt = "both" -- to enable cursorline!
 o.relativenumber = true -- to enable relative numbers!
+o.wrap = false
 -- o.relativenumber = "yes"
