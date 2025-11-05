@@ -1,7 +1,7 @@
 return {
   {
     "stevearc/conform.nvim",
-    event = "BufWritePre", -- uncomment for format on save
+    event = "BufWritePre",
     opts = require "configs.conform",
   },
 
@@ -11,6 +11,11 @@ return {
     config = function()
       require "configs.lspconfig"
     end,
+  },
+
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = require "configs.nvim-tree",
   },
 
   {
@@ -28,7 +33,7 @@ return {
     "folke/ts-comments.nvim",
     opts = {},
     event = "VeryLazy",
-    enabled = vim.fn.has("nvim-0.10.0") == 1,
+    enabled = vim.fn.has "nvim-0.10.0" == 1,
   },
 
   {
@@ -44,6 +49,33 @@ return {
     -- optional for floating window border decoration
     dependencies = {
       "nvim-lua/plenary.nvim",
+    },
+  },
+
+  {
+    "yetone/avante.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "stevearc/dressing.nvim",
+      "nvim-lua/plenary.nvim",
+      "MunifTanjim/nui.nvim",
+      "nvim-tree/nvim-web-devicons",
+      "HakonHarnes/img-clip.nvim",
+    },
+    config = function()
+      require("configs.avante").setup()
+    end,
+  },
+
+  {
+    "MeanderingProgrammer/render-markdown.nvim",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons", -- o mini.icons si prefieres mini.nvim
+    },
+    ft = { "markdown" },
+    opts = {
+      -- Configuración opcional, puedes dejarlo vacío o añadir ajustes más adelante
     },
   },
 }

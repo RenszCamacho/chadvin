@@ -2,10 +2,10 @@ local options = {
   -- Configuración específica para cada tipo de archivo
   formatters_by_ft = {
     lua = { "stylua" }, -- ya configurado
-    javascript = { "prettier" },
-    typescript = { "prettier" },
-    javascriptreact = { "prettier" },
-    typescriptreact = { "prettier" },
+    javascript = { "biome" },
+    typescript = { "biome" },
+    javascriptreact = { "biome" },
+    typescriptreact = { "biome" },
     json = { "prettier" },
     html = { "prettier" },
     css = { "prettier" },

@@ -5,9 +5,8 @@ local lspconfig = require "lspconfig"
 local nvlsp = require "nvchad.configs.lspconfig"
 
 -- Lista de servidores básicos
-local servers = { "html", "cssls", "ts_ls", "emmet_ls", "eslint", "tailwindcss" }
+local servers = { "html", "cssls", "ts_ls", "emmet_ls", "eslint", "tailwindcss", "biome" }
 
--- Configurar servidores con configuración por defecto
 for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = nvlsp.on_attach,

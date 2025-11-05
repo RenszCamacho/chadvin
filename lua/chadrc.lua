@@ -6,12 +6,12 @@
 local M = {}
 
 M.base46 = {
-  theme = "chadracula",
+  theme = "everforest",
   transparency = true,
-  -- hl_override = {
-  -- 	Comment = { italic = true },
-  -- 	["@comment"] = { italic = true },
-  -- },
+  hl_override = {
+    Comment = { italic = true },
+    ["@comment"] = { italic = true },
+  },
 }
 
 M.nvdash = {
@@ -44,10 +44,17 @@ M.nvdash = {
 M.ui = {
   cmp = {
     lspkind_text = true,
-    style = "default", -- default/flat_light/flat_dark/atom/atom_colored
+    style = "atom_colored", -- default/flat_light/flat_dark/atom/atom_colored
     format_colors = {
       tailwind = true,
     },
+  },
+  tabufline = {
+    enabled = false,
+  },
+  statusline = {
+    theme = "minimal",
+    separator_style = "block",
   },
 }
 
