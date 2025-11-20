@@ -11,9 +11,12 @@ map({ "n", "i", "v" }, "<leader>ww", "<CMD>w<CR>", { desc = "Save", remap = true
 
 map("n", "<leader>|", "<CMD>vertical split<CR>", { desc = "Toggle Vertical Split", remap = true })
 
-map("n", "<leader>cn", [[:!node %<CR>]], { desc = "Execute node code" })
+-- Toggle between wrap window or not
 
-map("n", "<leader>ct", [[:!npx ts-node %<CR>]], { desc = "Execute ts node code" })
+map("n", "<leader>;", function()
+  vim.o.wrap = not vim.o.wrap
+  print("wrap = " .. tostring(vim.o.wrap))
+end, { desc = "Toggle Wrap" })
 
 -- GIT KEYMAPS
 map("n", "<leader>gg", ":LazyGit<CR>", { desc = "Open LazyGit", noremap = true })
@@ -41,6 +44,6 @@ map({ "n", "t" }, "<leader>h", function()
   require("nvchad.term").toggle { pos = "sp", id = "htoggleTerm" }
 end, { desc = "terminal toggleable horizontal term" })
 
-map({ "n", "t" }, "<leader>i", function()
-  require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
-end, { desc = "terminal toggle floating term" })
+-- map({ "n", "t" }, "<leader>i", function()
+--   require("nvchad.term").toggle { pos = "float", id = "floatTerm" }
+-- end, { desc = "terminal toggle floating term" })

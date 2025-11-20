@@ -1,40 +1,54 @@
 -- ~/.config/nvim/lua/configs/avante.lua
--- Configuración de avante.nvim para NvChad
-
+-- Configuración de avante.nvim para usar Claude (Anthropic)
 local M = {}
-
 M.setup = function()
   require("avante").setup {
-    -- NUEVA CONFIGURACIÓN: providers en lugar de provider directo
-    provider = "openai", -- GitHub Models usa la API compatible con OpenAI
+    provider = "anthropic",
     providers = {
-      openai = {
-        endpoint = "https://models.inference.ai.azure.com",
-        model = "gpt-4o-mini", -- Modelo gratuito recomendado
+      anthropic = {
+        __inherited_from = "openai",
+        endpoint = "https://api.anthropic.com/v1/messages",
+        model = "claude-3-5-sonnet-20241022",
+        api_key_name = "ANTHROPIC_API_KEY",
+        max_tokens = 2048,
         timeout = 30000,
-        max_tokens = 2048, -- Reducido para evitar límites
         ["local"] = false,
-        -- Especifica que use GITHUB_TOKEN en lugar de OPENAI_API_KEY
-        api_key_name = "GITHUB_TOKEN",
-        -- Nueva estructura para parámetros del request
         extra_request_body = {
-          temperature = 0,
-          -- Limita el contexto enviado
-          max_context_length = 6000,
+          temperature = 0.2,
         },
+        parse_curl_args = function(opts, body)
+          -- Limpiar el body de funciones y campos no serializables
+          local clean_body = vim.deepcopy(body)
+
+          -- Remover campos que contienen funciones
+          if clean_body.tools then
+            for i, tool in ipairs(clean_body.tools) do
+              if tool.on_render then
+                clean_body.tools[i].on_render = nil
+              end
+            end
+          end
+
+          return {
+            url = opts.endpoint,
+            headers = {
+              "Content-Type: application/json",
+              "x-api-key: " .. os.getenv(opts.api_key_name),
+              "anthropic-version: 2023-06-01",
+            },
+            body = vim.fn.json_encode(clean_body),
+          }
+        end,
       },
     },
-    -- Configuración de comportamiento
     behaviour = {
-      auto_suggestions = false, -- Evita consumir límites automáticamente
+      auto_suggestions = false,
       auto_set_highlight_group = true,
       auto_set_keymaps = true,
       auto_apply_diff_after_generation = false,
       support_paste_from_clipboard = false,
     },
-    -- Mapeos de teclado personalizados
     mappings = {
-      --- @class AvanteConflictMappings
       diff = {
         ours = "co",
         theirs = "ct",
@@ -65,11 +79,10 @@ M.setup = function()
         reverse_switch_windows = "<S-Tab>",
       },
     },
-    hints = { enabled = true },
     windows = {
-      position = "right", -- "right", "left", "top", "bottom"
+      position = "right",
       wrap = true,
-      width = 30, -- % de la pantalla
+      width = 30,
       sidebar_header = {
         align = "center",
         rounded = true,
@@ -81,7 +94,6 @@ M.setup = function()
         incoming = "DiffAdd",
       },
     },
-    --- @class AvanteConflictUserConfig
     diff = {
       autojump = true,
       debug = false,
@@ -89,5 +101,4 @@ M.setup = function()
     },
   }
 end
-
 return M
